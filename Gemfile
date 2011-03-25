@@ -20,8 +20,13 @@ gem 'youtube_it', '1.4.1'
 gem 'oauth', '0.4.4'
 gem 'nokogiri', '1.4.4'
 gem 'rturk'
-gem 'turkee', '1.0.4'
 gem 'lockfile', '1.4.3'
+if (Socket.gethostname ~= /harris/) or Socket.gethostname == 'vagrantup'
+  gem "turkee", :path => "~/turkee"
+else
+  gem "turkee", :git => 'git://github.com/heedspin/turkee.git'
+end
+
 
 # Use unicorn as the web server
 # gem 'unicorn'

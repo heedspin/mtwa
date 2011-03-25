@@ -18,6 +18,11 @@ GIT
   specs:
     declarative_authorization (0.5.2)
 
+PATH
+  remote: ~/turkee
+  specs:
+    turkee (1.0.4)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -110,7 +115,6 @@ GEM
     thor (0.14.6)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
-    turkee (1.0.4)
     tzinfo (0.3.25)
     userstamp (2.0.1)
     xml-simple (1.0.15)
@@ -138,7 +142,7 @@ DEPENDENCIES
   paperclip (= 2.3.8)
   rails (= 3.0.4)
   rturk
-  turkee (= 1.0.4)
+  turkee!
   userstamp (= 2.0.1)
   will_paginate!
   youtube_it (= 1.4.1)
