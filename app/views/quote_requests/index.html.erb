@@ -1,0 +1,34 @@
+<% title "Quote Requests" %>
+
+<%= will_paginate @quote_requests %>
+
+<table class="data">
+  <thead>
+    <tr>
+			<th><%= QuoteRequest.human_attribute_name(:created_at) %></th>
+			<th><%= QuoteRequest.human_attribute_name(:email) %></th>
+			<th><%= QuoteRequest.human_attribute_name(:name) %></th>
+			<th><%= QuoteRequest.human_attribute_name(:company) %></th>
+			<th><%= QuoteRequest.human_attribute_name(:phone) %></th>
+			<th><%= QuoteRequest.human_attribute_name(:note) %></th>
+			<td />
+    </tr>
+  </thead>
+  <tbody>
+  <% @quote_requests.each do |quote_request| %>
+    <tr>
+      <td><%= link_to quote_request.created_at.strftime('%B %d, %Y'), quote_request_path(quote_request) %></td>
+      <td><%=h quote_request.email %></td>
+      <td><%=h quote_request.name %></td>
+      <td><%=h quote_request.company %></td>
+      <td><%=h quote_request.phone %></td>
+      <td><%=h quote_request.note[0..31] %></td>
+      <td>
+				<%= link_to 'Delete', quote_request_path(quote_request), :method => 'delete', :confirm => 'Are you sure?'%>
+			</td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @quote_requests %>

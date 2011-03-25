@@ -1,0 +1,28 @@
+
+<% title "Quote request from: #{@quote_request.name_email}" %>
+
+-------- Quote Request -------------
+<p>
+From:  <%= @quote_request.name_email %><br />
+To:    LXD<br />
+Sent:  <%= @quote_request.created_at %><br />
+</p>
+<br />
+<p>
+	<% (QuoteRequest.fields - [:name, :email, :created_at, :note]).each do |field| %>
+	<% if (value = @quote_request.send(field)).present? %>
+	<%= QuoteRequest.human_attribute_name(field)%>:
+		<% if value.is_a?(Array) %>
+		<%= raw value.join(', ') %>
+		<% else %>
+		<%= value %>
+		<% end %><br/>
+	<% end %>
+	<% end %>
+</p>
+
+<%= simple_format @quote_request.note %>
+
+<p>
+	<%= link_to('Back', quote_requests_path) %>
+</p>

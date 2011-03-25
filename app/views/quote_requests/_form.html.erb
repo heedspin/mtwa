@@ -1,0 +1,47 @@
+<%= raw store_referrer_as_return_to %>
+
+<fieldset class="inputs" id="yourInfo">
+	<h3>Your Information</h3>
+	<ol>
+		<li style="display:none" class="string optional" id="quote_request_subject_input"><label for="quote_request_subject">Subject</label><input id="quote_request_subject" maxlength="255" name="quote_request[subject]" size="50" type="text" /></li>
+		<%= f.input :name, :as => :string %>
+		<%= f.input :phone, :as => :string %>
+		<%= f.input :fax, :as => :string %>
+		<%= f.input :email, :as => :string %>
+		<%= f.input :country, :as => :string %>
+	</ol>
+</fieldset>
+
+<fieldset class="inputs" id="companyInfo">
+	<h3>Company Information</h3>
+	<ol>
+		<%= f.input :company %>
+		<%= f.input :address1 %>
+		<%= f.input :address2 %>
+		<%= f.input :city %>
+		<%= f.input :state %>
+		<%= f.input :zip %>
+	</ol>
+</fieldset>
+
+<fieldset class="inputs" id="servicesInfo">
+	<h3>Services Information</h3>
+	<p>On what services would you like more information? (Check all that apply)</p>
+	<ol>
+		<%= f.input :services, :label => false, :as => :check_boxes, :collection => Service.all_except_other %>
+	  <li id="quote_request_other_service_input">
+		  <label for="quote_request_services_9">
+			  <input id="quote_request_services_9" name="quote_request[services][]" value="9" type="checkbox"> Other
+		  </label>
+		 	<input id="quote_request_other_service" maxlength="255" name="quote_request[other_service]" type="text">
+	  </li>
+	</ol>
+</fieldset>
+
+<%= f.inputs :id => 'additionalQuest' do %>
+	<%= f.input :lead_time, :label => 'What is your lead time?' %>
+	<%= f.input :annual_use %>
+	<%= f.input :release_value %>
+	<%= f.input :order_frequency %>
+	<%= f.input :note, :label => 'Other details, specifications and notes' %>
+<% end %>

@@ -1,0 +1,43 @@
+<% title "Editing #{@content_module.description}" %>
+
+<div class="content_module">
+
+  <%= error_messages_for :content_module %>
+
+	<% semantic_form_for @content_module, :html => { :multipart => true } do |f| %>
+  <input type="hidden" name="return_to" value="<%=h params[:return_to] %>" />
+	<% f.inputs do %>
+	  <% if @content_module.has_title %>
+		  <%= f.input :title %>
+		<% end %>
+    
+    <% if @content_module.has_content %>
+    <%= f.input :content, :input_html => {:class => "mceEditor"} %>
+    <% end %>
+    
+    <% if @content_module.has_image? %>
+    <%= f.input :image, :as => :attachment %>
+    <% end %>
+
+    <% if @content_module.has_attachment? %>
+    <%= f.input :attachment, :as => :attachment %>
+    <% end %>
+
+    <% if @content_module.has_meta_title %>
+    <%= f.input :meta_title %>
+    <% end %>
+
+    <% if @content_module.has_meta_description %>
+    <%= f.input :meta_description, :input_html => { :rows => 10 } %>
+    <% end %>
+
+	  <% f.buttons do %>
+		  <%= f.commit_button 'Save' %>
+	    <li class="link"><%= link_to 'Cancel', (params[:return_to] || root_url) %></li>
+	  <% end %>
+
+  <% end %>
+  <% end %>
+
+</div>
+<!-- content_module -->

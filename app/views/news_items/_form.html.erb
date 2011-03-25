@@ -1,0 +1,19 @@
+<%= raw store_referrer_as_return_to %>
+<% f.inputs do %>
+  <%= f.input :status, :collection => Status.all, :required => true %>
+  <%= f.input :news_type, :collection => NewsType.all, :required => true %>
+	<li class="boolean optional" id="news_item_home_page_input">
+		<label for="news_item_home_page"><%= NewsItem.human_attribute_name(:home_page)%></label>
+		<%= f.check_box(:home_page) %>
+	</li>
+  <%= f.input :title, :required => true %>
+  <%= f.input :summary, :input_html => {:class => 'mceEditor'} %>
+  <%= f.input :body, :input_html => {:class => 'mceEditor'}, :required => true %>
+  <%= f.input :location, :required => true %>
+  <%= f.input :publish_date, :as => :calendar, :size => 10, :required => true %>
+  <%= f.input :image, :as => :attachment %>
+	<%= f.input :image_url %>
+  <%= f.input :show_image_mode, :collection => ShowImageMode.all %>
+  <%= f.input :attachment, :as => :attachment %>
+  <%= f.input :attachment_title %>
+<% end %>

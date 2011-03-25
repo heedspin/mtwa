@@ -1,0 +1,2 @@
+local_config: &local_config
+  email_password: secret

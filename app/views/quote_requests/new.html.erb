@@ -1,0 +1,16 @@
+<% cm = content_module(:quote_request) %>
+
+<div id="maincopy">
+	<h2><%= title cm.title %></h2>
+	<%= raw cm.content %>
+
+  <h2>Request Form</h2>
+	<% semantic_form_for @quote_request do |f| %>
+		<%= f.error_messages %>
+	  <%= render :partial => "form", :locals => {:f => f} %>
+		<div class="clear"></div>
+	  <%= f.buttons do %>
+	    <%= f.commit_button 'SUBMIT' %>
+		<% end %>
+	<% end %>
+</div>

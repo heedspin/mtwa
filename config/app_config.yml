@@ -1,0 +1,25 @@
+<% local_config = File.join(Rails.root, 'config/app_config_local.yml') %>
+<% if File.exists?(local_config) %>
+<%= File.open(local_config).read %>
+<% else %>
+local_config: &local_config
+  nothing: here
+<% end %>
+
+shared_config: &shared_config
+  email_password: <%= ENV['email_password'] %>
+
+development:
+  <<: *local_config
+  <<: *shared_config
+  contact_us_recipients: heedspin@gmail.com
+  
+production:
+  <<: *local_config
+  <<: *shared_config
+  contact_us_recipients: heedspin@gmail.com
+  
+test:
+  <<: *local_config
+  <<: *shared_config
+

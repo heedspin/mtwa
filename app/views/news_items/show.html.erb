@@ -1,0 +1,3 @@
+<% title (title_txt = 'SMT ' + @news_item.news_type.name) %>
+<% meta_title @news_item.title %>
+<%= render 'show', :news_item => @news_item %>

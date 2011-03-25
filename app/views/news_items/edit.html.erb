@@ -1,0 +1,12 @@
+<% title 'Editing News Item' %>
+
+<% semantic_form_for @news_item, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages %>
+  <%= render :partial=>'form', :locals =>{:f=>f} %>
+  <% f.buttons do %>
+	  <%= f.commit_button 'Save' %>
+	  <%= f.commit_button 'Save & Edit' %>
+    <li class="link"><%= link_to 'Cancel', (params[:return_to] || news_items_url) %></li>
+    <li class="link"><%= link_to 'Delete', news_item_path(@news_item), :confirm => 'Are you sure?', :method => :delete %></li>
+  <% end %>
+<% end %>

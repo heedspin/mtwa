@@ -1,0 +1,10 @@
+<% title 'Thank You For Contacting Us' %>
+
+<h3>Thank you for contacting us!  We've received you're request for a quote and will get back to you soon!</h3>
+
+<% if return_to = params[:return_to] %>
+	<br />
+	<h4>
+		<%= link_to '<< Go back', return_to %>
+	</h4>
+<% end %>

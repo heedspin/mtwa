@@ -1,0 +1,15 @@
+<% title 'SMT News' %>
+
+<% if permitted_to? :manage, :news_items %>
+<%= link_to 'Create News Item', new_news_item_url %> |
+<%= link_to 'Fix Positions', fix_positions_news_items_url %>
+<% end %>
+
+<%= will_paginate @new_items %>
+<div id="maincopy">
+	<h2>News</h2>
+<% @news_items.each do |news_item| %>
+	<%= render 'show', :news_item => news_item %>
+<% end %>
+</div><!-- maincopy -->
+<%= will_paginate @news_items %>

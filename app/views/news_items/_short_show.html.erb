@@ -1,0 +1,9 @@
+<% if news_item.image? and (news_item.show_image_mode.small? or news_item.show_image_mode.large?) %>
+<%= link_to image_tag(news_item.image.url(:thumbnail)), news_item_url(news_item)  %>
+<% end %>
+<h4><%= link_to_if news_item.body.present?, news_item.title, news_item_url(news_item) %>
+	<% if news_item.publish_date.present? %>
+	<span class="date"><%= news_item.publish_date.to_s(:post) %></span>
+	<% end %>
+</h4>
+<%= raw prefixed_content(news_item, :summary) %>

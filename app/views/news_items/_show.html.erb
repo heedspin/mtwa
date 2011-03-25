@@ -1,0 +1,46 @@
+<div class="post">
+	<% if permitted_to? :manage, :news_items %>
+	<div class="toolbar">
+		<ul class="actions">
+			<% if news_item.status.draft? %>
+			<li>Draft:</li>
+			<% end %>
+			<li><%= link_to 'Edit', edit_news_item_path(news_item, :return_to => request.url) %></li>
+			<% if news_item.status.deleted? %>
+			<li>Deleted</li>
+			<% else %>
+			<li><%= link_to 'Delete', news_item_path(news_item), :confirm => 'Are you sure?', :method => :delete %></li>
+			<li><%= link_to 'Back', news_items_path %></li>
+			<li>
+				<i>[ move: 
+	      <% unless news_item.first? %>
+	        <%= link_to "up", move_news_item_path(news_item, :direction => 'up') %> 
+	        <%= link_to "top", move_news_item_path(news_item, :direction => 'top') %>
+	      <% end %>
+	      <% unless news_item.last? %>
+		      <%= link_to "down", move_news_item_path(news_item, :direction => 'down') %>
+		      <%= link_to "bottom", move_news_item_path(news_item, :direction => 'bottom') %>
+	      <% end %>
+	      ]</i>   
+	     </li>
+			<% end %>
+		</ul>
+	</div>
+	<% end %>
+	
+	<% if news_item.image? and news_item.show_image_mode.small? %>
+	<% it = image_tag(news_item.image.url(:show))  %>
+	<%= news_item.image_url.present? ? link_to(it, news_item.image_url) : it %>
+	<% end %>
+	<h2><%= news_item.title %></h2>
+	<%= raw prefixed_content(news_item, :body) %>
+	<% if news_item.attachment? %>
+	<p><%= link_to news_item.attachment_title, news_item.attachment.url %></p>
+	<% end %>	
+	<% if news_item.image? and news_item.show_image_mode.large? %>
+	<p>
+	<% it = image_tag(news_item.image.url(:large), :width => '534')  %>
+	<%= news_item.image_url.present? ? link_to(it, news_item.image_url) : it %>
+	</p>
+	<% end %>
+</div><!-- post -->

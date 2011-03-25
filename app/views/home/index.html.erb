@@ -1,0 +1,21 @@
+<div id="imagebanner">
+</div>
+
+<div id="maincopy">
+    <div class="column1">
+			<% cm = meta(:home1) %>
+       <h3><%= cm.title %></h3>
+			<%= raw cm.content %>
+    </div>
+    <div class="column2">
+			<% cm = content_module(:home2) %>
+      <h3><%= cm.title %></h3>
+			<%= raw cm.content %>
+    </div>
+    <div class="column3">
+    	<h3>News &amp; Updates</h3>
+			<% @news_items.each do |news_item| %>
+				<%= render 'news_items/short_show', :news_item => news_item %>
+			<% end %>
+    </div>
+</div>        
