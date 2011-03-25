@@ -21,7 +21,9 @@ gem 'oauth', '0.4.4'
 gem 'nokogiri', '1.4.4'
 gem 'rturk'
 gem 'lockfile', '1.4.3'
-if (Socket.gethostname ~= /harris/) or Socket.gethostname == 'vagrantup'
+
+require 'socket'
+if (Socket.gethostname =~ /harris/) or Socket.gethostname == 'vagrantup'
   gem "turkee", :path => "~/turkee"
 else
   gem "turkee", :git => 'git://github.com/heedspin/turkee.git'
