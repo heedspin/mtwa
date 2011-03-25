@@ -6,6 +6,12 @@ GIT
       activesupport
 
 GIT
+  remote: git://github.com/heedspin/turkee.git
+  revision: 80dff97ca34832cd61bbb332ea793917d6fae95c
+  specs:
+    turkee (1.0.4)
+
+GIT
   remote: git://github.com/mislav/will_paginate.git
   revision: b1a5beeec9f56ecbe3594fcdca76d92b6767ce50
   branch: rails3
@@ -17,11 +23,6 @@ GIT
   revision: 1e393fecef239e3acf4f34575460db0b0252cc38
   specs:
     declarative_authorization (0.5.2)
-
-PATH
-  remote: ~/turkee
-  specs:
-    turkee (1.0.4)
 
 GEM
   remote: http://rubygems.org/
