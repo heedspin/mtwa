@@ -7,6 +7,9 @@ local_config: &local_config
 <% end %>
 
 shared_config: &shared_config
+  email_name: MTWA WebBot
+  email_address: mtwaweb@gmail.com
+  email_domain: mtwa.heroku.com
   email_password: <%= ENV['email_password'] %>
 
 development:
