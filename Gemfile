@@ -22,7 +22,7 @@ gem 'nokogiri', '1.4.4'
 gem 'rturk'
 gem 'lockfile', '1.4.3'
 
-if (ENV['TURKEE'] == "1") or (require 'socket' ; Socket.gethostname == 'vagrantup')
+if (ENV['TURKEE'] != "0") and (require 'socket' ; Socket.gethostname == 'vagrantup')
   gem "turkee", :path => "~/turkee"
 else
   gem "turkee", :git => 'git://github.com/heedspin/turkee.git'
