@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110325211109) do
+ActiveRecord::Schema.define(:version => 20110326002447) do
 
   create_table "content_modules", :force => true do |t|
     t.string   "key"
@@ -35,6 +35,15 @@ ActiveRecord::Schema.define(:version => 20110325211109) do
     t.datetime "updated_at"
     t.string   "meta_title"
     t.boolean  "has_meta_title"
+  end
+
+  create_table "mt_pdf_surveys", :force => true do |t|
+    t.string   "title"
+    t.text     "material"
+    t.text     "finish"
+    t.text     "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "news_items", :force => true do |t|

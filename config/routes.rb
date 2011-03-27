@@ -75,17 +75,10 @@ Smtcoinc::Application.routes.draw do
   match 'quote_requests/thanks' => 'quote_requests#thanks', :as => 'quote_request_thanks'
   resources :quote_requests
   resources :content_modules
-
-  if AppConfig.smtcoinc?
-    resources :paint, :as => :paint_samples, :controller => :paint_samples  
-    resource :contract_manufacturing
-    resource :prototyping_and_engineering
-    resource :structural_telecom
-    resource :samples_of_work
-  end
+  
+  resources :mt_pdf_surveys
 
   root :to => 'home#index'
-  match 'smt_video_tour' => 'home#smt_video_tour'
 
   # See how all your routes lay out with "rake routes"
 

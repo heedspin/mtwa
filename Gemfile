@@ -22,8 +22,11 @@ gem 'nokogiri', '1.4.4'
 gem 'rturk'
 gem 'lockfile', '1.4.3'
 
-gem "turkee", :git => 'git://github.com/heedspin/turkee.git'
-# gem "turkee", :path => "~/turkee"
+if (ENV['TURKEE'] == "1") or (require 'socket' ; Socket.gethostname == 'vagrantup')
+  gem "turkee", :path => "~/turkee"
+else
+  gem "turkee", :git => 'git://github.com/heedspin/turkee.git'
+end
 
 # Use unicorn as the web server
 # gem 'unicorn'

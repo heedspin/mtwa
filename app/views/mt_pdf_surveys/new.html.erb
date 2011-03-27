@@ -1,0 +1,12 @@
+<% semantic_form_for @survey, :url => mt_url do |f| %>
+<input type="hidden" name="assignmentId" value="<%= @assignment_id %>" />
+<%= f.inputs do %>
+	<%= f.input :title, :input_html => {:disabled => @disabled} %>
+	<%= f.input :material, :input_html => {:disabled => @disabled} %>
+<% end %>
+
+<% f.buttons do %>
+  <%= f.commit_button 'Save', :button_html => {:disabled => @disabled} %>
+<% end %>
+
+<% end %>
