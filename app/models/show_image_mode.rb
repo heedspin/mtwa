@@ -1,9 +1,10 @@
-require 'active_hash_methods'
+require 'active_hash/super_enum'
 class ShowImageMode < ActiveHash::Base
+  include ActiveHash::SuperEnum
   self.data = [
     {:id => 1, :name => 'Not Shown'},
     {:id => 2, :name => 'Small'},
     {:id => 3, :name => 'Large'},
   ]
-  include ActiveHashMethods
+  enum_accessor :name
 end

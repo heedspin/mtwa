@@ -8,7 +8,7 @@ gem 'authlogic', :git => 'git://github.com/binarylogic/authlogic.git'
 gem 'declarative_authorization', :git => 'git://github.com/stffn/declarative_authorization.git'
 gem 'formtastic', '1.2.3'
 gem 'paperclip', '2.3.8'
-gem 'active_hash', '0.9.0'
+gem 'active_hash', '0.9.1'
 gem 'userstamp', '2.0.1'
 # gem 'will_paginate', '2.3.15'
 gem 'will_paginate', :git => 'git://github.com/mislav/will_paginate.git', :branch => 'rails3'
@@ -21,12 +21,7 @@ gem 'oauth', '0.4.4'
 gem 'nokogiri', '1.4.4'
 gem 'rturk'
 gem 'lockfile', '1.4.3'
-
-if (ENV['TURKEE'] != "0") and (require 'socket' ; Socket.gethostname == 'vagrantup')
-  gem "turkee", :path => "~/turkee"
-else
-  gem "turkee", :git => 'git://github.com/heedspin/turkee.git'
-end
+gem 'default_value_for', :git => 'https://github.com/FooBarWidget/default_value_for.git'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -52,4 +47,5 @@ end
 
 group :development do
   gem 'annotate', '2.4.0'
+  gem 'ruby-debug'
 end

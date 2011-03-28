@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110326002447) do
+ActiveRecord::Schema.define(:version => 20110328012645) do
 
   create_table "content_modules", :force => true do |t|
     t.string   "key"
@@ -37,14 +37,35 @@ ActiveRecord::Schema.define(:version => 20110326002447) do
     t.boolean  "has_meta_title"
   end
 
+  create_table "mt_hits", :force => true do |t|
+    t.string   "hit_url"
+    t.boolean  "sandbox"
+    t.string   "task_type"
+    t.text     "hit_title"
+    t.text     "hit_description"
+    t.string   "hit_id"
+    t.decimal  "hit_reward",          :precision => 10, :scale => 2
+    t.integer  "hit_num_assignments"
+    t.integer  "hit_lifetime"
+    t.string   "form_url"
+    t.boolean  "complete"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "mt_pdf_surveys", :force => true do |t|
     t.string   "title"
     t.text     "material"
     t.text     "finish"
     t.text     "notes"
+    t.integer  "mt_hit_id"
+    t.string   "assignment_id"
+    t.integer  "mt_answer_status_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "mt_pdf_surveys", ["assignment_id"], :name => "index_mt_pdf_surveys_on_assignment_id", :unique => true
 
   create_table "news_items", :force => true do |t|
     t.integer  "status_id",                               :default => 1

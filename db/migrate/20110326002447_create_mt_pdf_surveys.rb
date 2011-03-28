@@ -5,8 +5,13 @@ class CreateMtPdfSurveys < ActiveRecord::Migration
       t.text :material
       t.text :finish
       t.text :notes
+      t.references :mt_hit
+      t.string :assignment_id
+      t.references :mt_answer_status
       t.timestamps
     end
+    
+    add_index :mt_pdf_surveys, :assignment_id, :unique => true
   end
 
   def self.down

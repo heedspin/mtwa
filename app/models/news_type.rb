@@ -1,8 +1,9 @@
-require 'active_hash_methods'
+require 'active_hash/super_enum'
 class NewsType < ActiveHash::Base
+  include ActiveHash::SuperEnum
   self.data = [
-    {:id => 1,   :name => 'News'},
+    {:id => 1, :name => 'News'},
     {:id => 2, :name => 'Press Release'},
   ]
-  include ActiveHashMethods
+  enum_accessor :name
 end

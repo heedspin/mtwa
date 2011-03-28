@@ -1,8 +1,9 @@
-require 'active_hash_methods'
+require 'active_hash/super_enum'
 class UserRole < ActiveHash::Base
+  include ActiveHash::SuperEnum
   self.data = [
     { :id => 1, :name => 'Admin' },
     { :id => 2, :name => 'User'}
   ]
-  include ActiveHashMethods  
+  enum_accessor :name
 end
