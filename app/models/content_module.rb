@@ -1,33 +1,3 @@
-=begin Schema Information
-
- Table name: content_modules
-
-  id                      :integer(4)      not null, primary key
-  key                     :string(255)
-  description             :string(255)
-  has_title               :boolean(1)
-  title                   :string(255)
-  has_content             :boolean(1)
-  content                 :text
-  image_file_name         :string(255)
-  image_content_type      :string(255)
-  image_file_size         :integer(4)
-  has_image               :boolean(1)
-  attachment_file_name    :string(255)
-  attachment_content_type :string(255)
-  attachment_file_size    :integer(4)
-  has_attachment          :boolean(1)
-  creator_id              :integer(4)
-  updater_id              :integer(4)
-  created_at              :datetime
-  updated_at              :datetime
-  meta_description        :text
-  has_meta_description    :boolean(1)
-  meta_title              :string(255)
-  has_meta_title          :boolean(1)
-
-=end Schema Information
-
 class ContentModule < ApplicationModel
   has_attached_file( :image, :whiny => false,
                      :styles => {:show => '200>', :index => '100>', :edit => '100>', :thumbnail => '100>' },

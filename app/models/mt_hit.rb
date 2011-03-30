@@ -1,9 +1,10 @@
+
 class MtHit < ApplicationModel
   include ActionController::UrlWriter
   validates_presence_of :task_type, :hit_url, :hit_title, :hit_description, :hit_id, :hit_reward, :hit_num_assignments, :hit_lifetime, :form_url
-  
+
   scope :in_progress, :conditions => 'mt_hits.complete = false or mt_hits.complete is null'
-  
+
   default_value_for :sandbox do
     RTurk.sandbox?
   end
@@ -15,6 +16,15 @@ class MtHit < ApplicationModel
   end
   default_value_for :hit_lifetime do
     1.days.seconds.to_i
+  end
+  
+  attr_accessor :cookie
+  before_save :encode_cookie
+  def encode_cookie
+    self.cookie_json = self.cookie.to_json if self.cookie.present?
+  end
+  def cookie
+    @cookie ||= self.cookie_json && JSON.parse(self.cookie_json)
   end
 
   def rturk_hit
@@ -35,15 +45,15 @@ class MtHit < ApplicationModel
   def task_class
     self.task_type.constantize
   end
-  
+
   def task_object_name
     ActiveModel::Naming.singular(self.task_class)
   end
-  
+
   def assignments
     self.rturk_hit.assignments
   end
-  
+
   def answers
     if @answers.nil?
       @answers = task_class.for_hit(self)
@@ -65,7 +75,7 @@ class MtHit < ApplicationModel
     end
     @answers
   end
-  
+
   def in_progress?
     !self.complete?
   end
@@ -73,11 +83,11 @@ class MtHit < ApplicationModel
   HIT_FRAMEHEIGHT = 1000
 
   def self.make(args)
-    cookie = (args.delete(:cookie) || {}).clone
     mt_hit = MtHit.new(args)
     host = RTurk.sandbox? ? AppConfig.local_hostname : AppConfig.production_hostname
-    url_args = cookie.merge(:host => host, :protocol => RTurk.sandbox? ? 'http' : 'https')
-    mt_hit.form_url = mt_hit.send("new_#{mt_hit.task_object_name}_url", url_args)
+    mt_hit.form_url = mt_hit.send("new_#{mt_hit.task_object_name}_url",
+                                  :host => host,
+                                  :protocol => RTurk.sandbox? ? 'http' : 'https')
 
     h = RTurk::Hit.create(:title => mt_hit.hit_title) do |hit|
       hit.assignments = mt_hit.hit_num_assignments
@@ -90,6 +100,10 @@ class MtHit < ApplicationModel
     mt_hit.hit_url = h.url
     mt_hit.save
     mt_hit
+  end
+  
+  def self.preview_assignment?(assignment_id)
+    assignment_id.nil? || (assignment_id == 'ASSIGNMENT_ID_NOT_AVAILABLE')
   end
 end
 # == Schema Information
@@ -108,6 +122,8 @@ end
 #  hit_lifetime        :integer(4)
 #  form_url            :string(255)
 #  complete            :boolean(1)
+#  cookie_json         :text
 #  created_at          :datetime
 #  updated_at          :datetime
 #
+

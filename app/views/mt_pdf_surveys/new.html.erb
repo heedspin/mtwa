@@ -1,3 +1,10 @@
+<% if @disabled %>
+<h2>HIT Preview</h2>
+<p>Remember To "Accept HIT" to proceed.</p>
+<% end %>
+
+<%= link_to "PDF page #{@survey.page}", "#{@survey.asset_path}?#{rails_asset_id(@survey.asset_path)}" %>
+
 <%= semantic_form_for @survey, :url => mt_url do |f| %>
 <input type="hidden" name="assignmentId" value="<%= @assignment_id %>" />
 <%= f.inputs do %>
@@ -8,5 +15,4 @@
 <%= f.buttons do %>
   <%= f.commit_button 'Save', :button_html => {:disabled => @disabled} %>
 <% end %>
-
 <% end %>

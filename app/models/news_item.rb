@@ -1,36 +1,3 @@
-=begin Schema Information
-
- Table name: news_items
-
-  id                      :integer(4)      not null, primary key
-  status_id               :integer(4)      default(1)
-  news_type_id            :integer(4)      default(1)
-  position                :integer(4)
-  home_page               :boolean(1)      default(TRUE)
-  title                   :string(255)
-  summary                 :text
-  body                    :text
-  location                :string(255)
-  publish_date            :datetime
-  image_caption           :string(255)
-  image_url               :string(1024)
-  image_file_name         :string(255)
-  image_content_type      :string(255)
-  image_file_size         :integer(4)
-  image_updated_at        :datetime
-  show_image_mode_id      :integer(4)      default(2)
-  attachment_title        :string(255)
-  attachment_file_name    :string(255)
-  attachment_content_type :string(255)
-  attachment_file_size    :integer(4)
-  attachment_updated_at   :datetime
-  creator_id              :integer(4)
-  updater_id              :integer(4)
-  created_at              :datetime
-  updated_at              :datetime
-
-=end Schema Information
-
 class NewsItem < ApplicationModel
   belongs_to :status
   belongs_to :news_type

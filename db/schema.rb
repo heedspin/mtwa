@@ -49,11 +49,14 @@ ActiveRecord::Schema.define(:version => 20110328012645) do
     t.integer  "hit_lifetime"
     t.string   "form_url"
     t.boolean  "complete"
+    t.text     "cookie_json"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "mt_pdf_surveys", :force => true do |t|
+    t.integer  "page"
+    t.string   "key"
     t.string   "title"
     t.text     "material"
     t.text     "finish"
@@ -118,30 +121,6 @@ ActiveRecord::Schema.define(:version => 20110328012645) do
     t.datetime "updated_at"
     t.integer  "quote_status_id",    :default => 1
     t.string   "other_service"
-  end
-
-  create_table "turkee_imported_assignments", :force => true do |t|
-    t.string   "assignment_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "turkee_imported_assignments", ["assignment_id"], :name => "index_turkee_imported_assignments_on_assignment_id", :unique => true
-
-  create_table "turkee_tasks", :force => true do |t|
-    t.string   "hit_url"
-    t.boolean  "sandbox"
-    t.string   "task_type"
-    t.text     "hit_title"
-    t.text     "hit_description"
-    t.string   "hit_id"
-    t.decimal  "hit_reward",          :precision => 10, :scale => 2
-    t.integer  "hit_num_assignments"
-    t.integer  "hit_lifetime"
-    t.string   "form_url"
-    t.boolean  "complete"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

@@ -1,6 +1,8 @@
 class CreateMtPdfSurveys < ActiveRecord::Migration
   def self.up
     create_table :mt_pdf_surveys, :force => true do |t|
+      t.integer :page
+      t.string :key
       t.string :title
       t.text :material
       t.text :finish

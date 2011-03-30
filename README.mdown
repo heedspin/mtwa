@@ -1,2 +1,20 @@
-= Vagrant Setup
+= Heroku
 
+Needs some environment variables:
+
+ - S3_KEY
+ - S3_SECRET
+ - email_password
+
+heroku config:add key=value
+
+
+## S3
+
+ * Configure:
+   s3cmd --configure -c config/s3cfg
+
+ * Sync assets to s3
+	run with -n first for dry run
+	cd public
+  s3cmd sync -c ../config/s3cfg --acl-public ./ s3://mtwa/

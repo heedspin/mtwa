@@ -1,15 +1,16 @@
 class MtPdfSurveysController < ApplicationController
+  layout 'mturk'
   skip_before_filter :require_login, :only => [:new]
 
   def new
     @assignment_id = params[:assignmentId]
-    @disabled      = Turkee::TurkeeFormHelper::disable_form_fields?(@assignment_id)
-
-    # If you wanted to find the associated turkee_task, you could do a find by hitId
-    #  Not necessary in a simple example.
-    # @turkee_task   = Turkee::TurkeeTask.find_by_hit_id(params[:hitId]).id rescue nil
-    @survey = MtPdfSurvey.new
-    render :layout => false
+    @disabled = MtHit.preview_assignment?(@assignment_id)
+    @mt_hit = MtHit.find_by_hit_id(params[:hitId])
+    if @assignment_id and @mt_hit
+      @survey = MtPdfSurvey.new(@mt_hit.cookie)
+    else
+      record_not_found
+    end
   end
   
   protected

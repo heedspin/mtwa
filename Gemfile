@@ -22,6 +22,8 @@ gem 'nokogiri', '1.4.4'
 gem 'rturk'
 gem 'lockfile', '1.4.3'
 gem 'default_value_for', :git => 'https://github.com/FooBarWidget/default_value_for.git'
+gem 'json', '1.5.1'
+# gem 's3_swf_upload', :git => 'https://github.com/nathancolgate/s3-swf-upload-plugin.git'
 
 # Use unicorn as the web server
 # gem 'unicorn'
