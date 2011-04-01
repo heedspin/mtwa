@@ -1,0 +1,18 @@
+<table class="mtdata">
+  <thead>
+    <tr>
+			<% (1..columns).each do |column| %>
+			<th><%= table_input(object, field, 'header', column) %></th>
+			<% end %>
+		</tr>
+	</thead>
+  <tbody>
+		<% (1..rows).each do |row| %>
+    <tr class="<%= cycle('even', 'odd') %>">
+			<% (1..columns).each do |column| %>
+			<td><%= table_input(object, field, row, column) %></td>
+		<% end %>
+		</tr>
+		<% end %>
+	</tbody>
+</table>

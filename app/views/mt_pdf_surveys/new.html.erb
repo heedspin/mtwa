@@ -3,15 +3,49 @@
 <p>Remember To "Accept HIT" to proceed.</p>
 <% end %>
 
-<%= link_to "PDF page #{@survey.page}", "#{@survey.asset_path}?#{rails_asset_id(@survey.asset_path)}" %>
+<div class="mt-instructions">
+	<h3>Instructions</h3>
+	<p>
+		Enter the text and images from 
+		<% unless @survey.subpage.only? %>
+		the <strong><%= @survey.subpage.name %> Product</strong> on
+		<% end %>
+		<%= link_to 'This PDF', "#{@survey.asset_path}?#{rails_asset_id(@survey.asset_path)}" %>
+	</p>
+
+	<% if @survey.subpage.only? %>
+	<p>
+		This PDF has describes a single product.  Please enter the text below and upload a screenshot of the image.
+	</p>
+	<% else %>
+	<p>
+		This PDF describes two products.  Please enter the text below and upload a screenshot of the image for the <strong><%= @survey.subpage.name %></strong> product on the page.
+	</p>
+	<% end %>
+</div>
 
 <%= semantic_form_for @survey, :url => mt_url do |f| %>
 <input type="hidden" name="assignmentId" value="<%= @assignment_id %>" />
 <%= f.inputs do %>
 	<%= f.input :title, :input_html => {:disabled => @disabled} %>
 	<%= f.input :material, :input_html => {:disabled => @disabled} %>
+	<%= f.input "table1_title", :input_html => {:disabled => @disabled}, :label => 'First Table Title' %>
+	<li>
+		<label>First Table Data</label>
+		<%= render 'table_input', :f => f, :object => :mt_pdf_survey, :field => :table1, :columns => 5, :rows => 10 %>
+	</li>
+	<%= f.input "table2_title", :input_html => {:disabled => @disabled}, :label => 'Second Table Title' %>
+	<li>
+		<label>Second Table Data</label>
+		<%= render 'table_input', :f => f, :object => :mt_pdf_survey, :field => :table2, :columns => 5, :rows => 10 %>
+	</li>
 <% end %>
 
+<% unless @survey.subpage.only? %>
+<p>
+	Double Check that you entered the <strong><%= @survey.subpage.name %> Product On Page</strong>
+</p>
+<% end %>
 <%= f.buttons do %>
   <%= f.commit_button 'Save', :button_html => {:disabled => @disabled} %>
 <% end %>

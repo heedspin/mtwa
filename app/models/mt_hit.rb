@@ -1,6 +1,5 @@
-
 class MtHit < ApplicationModel
-  include ActionController::UrlWriter
+  include Rails.application.routes.url_helpers
   validates_presence_of :task_type, :hit_url, :hit_title, :hit_description, :hit_id, :hit_reward, :hit_num_assignments, :hit_lifetime, :form_url
 
   scope :in_progress, :conditions => 'mt_hits.complete = false or mt_hits.complete is null'

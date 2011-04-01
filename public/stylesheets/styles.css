@@ -560,6 +560,9 @@ form.formtastic fieldset > ol > li.boolean label {
    padding-left: 0;
    width: auto;
 }
+form.formtastic strong {
+	font-weight: bold;
+}
 
 
 /* Developer changes
@@ -672,3 +675,42 @@ div.flash_notice  {
 	font-size: 1.5em;
 }
 div.flash_error ul, div.flash_notice ul { list-style-type:decimal;list-style-position:inside;}
+
+/* MECH TURK TABLES
+-------------------------------------------------------------------- */
+table.mtdata {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 15px 0 15px 0;
+  }
+table.mtdata thead {
+  background: #dcdcdc;
+  }
+table.mtdata tr.even {
+  background-color: #ededed;
+  }
+table.mtdata th {
+  font-size: 12px;
+  color: #646870;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #c5c5c5;
+  padding: 2px;
+  }
+table.mtdata td {
+  font-size: 12px;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #c5c5c5;
+  padding: 2px;
+  }
+
+div.mt-instructions {
+	width: 680px;
+}
+div.mt-instructions h3 {
+	padding: 2px;
+	color: white;
+	background-color: #aaa;
+	margin: 0 0 10px 0;
+}

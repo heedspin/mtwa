@@ -8,6 +8,8 @@ class MtPdfSurveysController < ApplicationController
     @mt_hit = MtHit.find_by_hit_id(params[:hitId])
     if @assignment_id and @mt_hit
       @survey = MtPdfSurvey.new(@mt_hit.cookie)
+    elsif Rails.env.development?
+      @survey = MtPdfSurvey.new(:page => 6, :subpage => Subpage.second, :survey_type => SurveyType.first)
     else
       record_not_found
     end

@@ -3,12 +3,6 @@ class ApplicationController < ActionController::Base
   include NavigationSystem
   include Userstamp
   
-  if AppConfig.smtpaint?
-    layout 'smtpaint'
-  else
-    layout 'application'
-  end
-
   protected
   
     def cache_control(seconds=60)

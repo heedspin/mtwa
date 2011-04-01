@@ -4,7 +4,7 @@ class NewsItem < ApplicationModel
   belongs_to :show_image_mode
   acts_as_list
   after_create :move_to_top
-  BUCKET = Rails.env.production? ? 'smtcoinc' : 'smtcoinc-dev'
+  BUCKET = 'mtwa'
   has_attached_file( :image, :whiny => false,
                      :styles => {:show => '200>', :index => '100>', :edit => '100>', :thumbnail => '100>', :medium => '400>', :large => '600>' },
                      :storage => :s3,

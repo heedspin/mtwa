@@ -41,7 +41,7 @@ module Smtcoinc
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [ :password, :password_confirmation]
 
-    config.session_store :cookie_store, { :session_key => '_smt_session',
+    config.session_store :cookie_store, { :session_key => '_mtwa_session',
                                           :secret      => '0we0edbfc8055fbeo2efn9fga3ch4jebsd64k91e07ka6ubd2g9cecegae29184shj49fw3bh5w1d7444346983eu5ahecrf6s00j49e8daa2c9f9d15a6ed142c45c63' }
 
     config.colorize_logging = false    

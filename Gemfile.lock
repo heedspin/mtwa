@@ -24,6 +24,12 @@ GIT
   specs:
     default_value_for (1.0.1)
 
+GIT
+  remote: https://github.com/nathancolgate/s3-swf-upload-plugin.git
+  revision: 3d3aa9407eaf258561fa87c05440e01b2652ee14
+  specs:
+    s3_swf_upload (0.3.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -41,7 +47,7 @@ GEM
       rack-mount (~> 0.6.13)
       rack-test (~> 0.5.7)
       tzinfo (~> 0.3.23)
-    active_hash (0.9.1)
+    active_hash (0.9.2)
       activesupport (>= 2.2.2)
     activemodel (3.0.4)
       activesupport (= 3.0.4)
@@ -135,7 +141,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_hash (= 0.9.1)
+  active_hash (= 0.9.2)
   acts_as_list (= 0.1.2)
   annotate (= 2.4.0)
   authlogic!
@@ -154,6 +160,7 @@ DEPENDENCIES
   rails (= 3.0.4)
   rturk
   ruby-debug
+  s3_swf_upload!
   userstamp (= 2.0.1)
   will_paginate!
   youtube_it (= 1.4.1)

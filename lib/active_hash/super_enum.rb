@@ -8,9 +8,10 @@ module ActiveHash
     module Methods
       def insert(record)
         super
-        constant = constant_for(record.attributes[@enum_accessor])
+        enum_value = record.attributes[@enum_accessor]
+        constant = constant_for(enum_value)
         return nil if constant.blank?
-        downer_constant = constant.downcase
+        downer_constant = record.attributes[:method] || constant.downcase
         self.class_eval <<-TEXT
         def #{downer_constant}?
           self.id == #{constant}.id
