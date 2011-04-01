@@ -28,7 +28,7 @@
 <input type="hidden" name="assignmentId" value="<%= @assignment_id %>" />
 <%= f.inputs do %>
 	<%= f.input :title, :input_html => {:disabled => @disabled} %>
-	<%= f.input :material, :input_html => {:disabled => @disabled} %>
+	<%= f.input :material, :input_html => {:disabled => @disabled, :class => :wymeditor} %>
 	<%= f.input "table1_title", :input_html => {:disabled => @disabled}, :label => 'First Table Title' %>
 	<li>
 		<label>First Table Data</label>
