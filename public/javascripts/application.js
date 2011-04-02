@@ -4,7 +4,8 @@
 $(document).ready(function(){
 	jQuery(function() {
 	    jQuery('.wymeditor').wymeditor({
-	        skin: 'timpact'
+	        skin: 'timpact',
+					stylesheet: '/stylesheets/wymeditor.css'
 	    });
 	});
 });

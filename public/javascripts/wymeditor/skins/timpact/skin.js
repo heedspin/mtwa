@@ -20,16 +20,5 @@ WYMeditor.SKINS['timpact'] = {
         },function(){
           jQuery(this).removeClass("hover");
         });
-
-        var postInit = wym._options.postInit;
-        wym._options.postInit = function(wym) {
-
-            if(postInit) postInit.call(wym, wym);
-            var rule = {
-                name: 'body',
-                css: 'background-color: #f0f0f0;'
-            };
-            wym.addCssRule( wym._doc.styleSheets[0], rule);
-        };
     }
 };
