@@ -1,3 +1,0 @@
-[submodule "vendor/cookbooks"]
-	path = vendor/cookbooks
-	url = git@github.com:wested/cookbooks.git
