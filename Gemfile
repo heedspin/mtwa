@@ -51,3 +51,7 @@ group :development do
   gem 'annotate', '2.4.0'
   gem 'ruby-debug'
 end
+
+group :test do
+  gem 'ruby-debug'
+end

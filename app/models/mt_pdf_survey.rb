@@ -20,6 +20,26 @@ class MtPdfSurvey < ApplicationModel
       "Product on Page"
     end
   end
+  
+  attr_accessor :table1
+  attr_accessor :table2
+  
+  def table1
+    (self.table1_data.present? && JSON.parse(self.table1_data).map { |r| r.keys.sort.map { |k| r[k] } })
+  end
+  
+  def table2
+    (self.table2_data.present? && JSON.parse(self.table2_data).map { |r| r.keys.sort.map { |k| r[k] } })
+  end
+  
+  protected
+  
+    before_save :encode_table_data
+    def encode_table_data
+      self.table1_data = @table1 && @table1.to_json
+      self.table2_data = @table2 && @table2.to_json
+      true
+    end
 end
 
 
