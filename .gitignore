@@ -10,6 +10,7 @@ config/email_password.txt
 s3_local.yml
 app_config_local.yml
 config/s3cfg
+config/uploads-s3cfg
 public/videos/*.mp4
 public/harrison-shared
 public/assets

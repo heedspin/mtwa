@@ -116,6 +116,7 @@ Vagrant::Config.run do |config|
   # folder, and the third is the path on the host to the actual folder.
   config.vm.share_folder("app-data", "/var/www/apps/#{@app[:name]}", ".")
   config.vm.share_folder("home-dir", "/home/vagrant/home", "..")
+  config.vm.share_folder("bundler-dir", "/home/vagrant/.bundler", "tmp/vagrant_bundler")
 
   # Enable provisioning with chef solo, specifying a cookbooks path (relative
   # to this Vagrantfile), and adding some recipes and/or roles.

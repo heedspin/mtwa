@@ -13,8 +13,14 @@ heroku config:add key=value
 
  * Configure:
    s3cmd --configure -c config/s3cfg
+	 s3cmd --configure -c config/uploads-s3cfg
 
  * Sync assets to s3
 	run with -n first for dry run
 	cd public
+  s3cmd sync -n -c ../config/s3cfg --acl-public ./ s3://mtwa/
+  s3cmd sync -c ../config/s3cfg --acl-public ./ s3://mtwa/
+
+	cd mtuploads
+  s3cmd sync -n -c ../config/uploads-s3cfg --acl-public ./ s3://mtwa-uploads/
   s3cmd sync -c ../config/s3cfg --acl-public ./ s3://mtwa/

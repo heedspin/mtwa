@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110328012645) do
+ActiveRecord::Schema.define(:version => 20110404031047) do
 
   create_table "content_modules", :force => true do |t|
     t.string   "key"
@@ -131,6 +131,17 @@ ActiveRecord::Schema.define(:version => 20110328012645) do
     t.datetime "updated_at"
     t.integer  "quote_status_id",    :default => 1
     t.string   "other_service"
+  end
+
+  create_table "s3_uploads", :force => true do |t|
+    t.integer  "mt_hit_id"
+    t.string   "assignment_id"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

@@ -1,3 +1,4 @@
+require 'digest/md5'
 class MtPdfSurveysController < ApplicationController
   layout 'mturk'
   skip_before_filter :require_login, :only => [:new]
@@ -13,10 +14,11 @@ class MtPdfSurveysController < ApplicationController
     else
       record_not_found
     end
+    @upload_prefix = Digest::MD5.hexdigest("#{request.remote_addr}-#{Time.now.to_f}")
   end
-  
+
   protected
-  
+
     def mt_url
       'https://workersandbox.mturk.com/mturk/externalSubmit'
       # 'http://www.mturk.com/mturk/externalSubmit'

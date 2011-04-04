@@ -1,6 +1,4 @@
 Smtcoinc::Application.routes.draw do
-  resources :s3_uploads
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -79,6 +77,7 @@ Smtcoinc::Application.routes.draw do
   resources :content_modules
   
   resources :mt_pdf_surveys
+  resources :s3_uploads
 
   root :to => 'home#index'
 
