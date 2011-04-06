@@ -53,11 +53,11 @@ class S3UploadsController < ApplicationController
   end
   
   def create
-    @upload = S3Upload.new(params[:mt_upload])
+    @upload = S3Upload.new(params[:s3_upload])
 
     respond_to do |format|
       if @upload.save
-        format.js { render :nothing => true }
+        format.js { render :json => { :url => @upload.file.url }.to_json }
       else
         format.js { render :text => 'alert("Failure from Rails!");' }
       end

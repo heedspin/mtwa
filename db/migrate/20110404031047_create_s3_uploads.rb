@@ -7,6 +7,8 @@ class CreateS3Uploads < ActiveRecord::Migration
       t.string :file_content_type
       t.integer :file_file_size
       t.datetime :file_updated_at
+      t.integer :survey_id
+      t.string :survey_type
       t.timestamps
     end
   end

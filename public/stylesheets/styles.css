@@ -702,7 +702,7 @@ table.mtdata td {
 }
 
 table.mtdata th input {
-	background-color: #ccc;
+	background-color: #ddd;
 }
 
 table.mtdata input {
@@ -724,6 +724,28 @@ div.mt-instructions h3 {
 	width: 300px;
 }
 
+.image_preview {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: 100px;
+    height: 100px;
+		border: 1px dotted #c5c5c5;
+}
+.image_preview * {
+    vertical-align: middle;
+}
+/*\*//*/
+.image_preview {
+    display: block;
+}
+.image_preview span {
+    display: inline-block;
+    height: 100%;
+    width: 1px;
+}
+/**/
+
 /* S3 Uploader 
 ---------------------------------------------------------- */
 div#wrapper {width:800px;margin:0px auto;text-align:left;}
@@ -740,9 +762,9 @@ ul#file_done_list li span.progress {width:100%;border-right:0;}
 ul#file_todo_list li span.progress {display:none;}
 
 div#overall {border:1px solid #ccc;height:35px;line-height:35px;position:relative;font-size:130%;margin-bottom:10px;}
-div#overall span.progress {display:block;position:absolute;background:#FFBFF8;text-align:right;}
-div#overall span.progress span.amount {padding-right:10px;color:#FFDFFB;font-weight:bold;}
+div#overall span.progress {display:block;position:absolute;background:#BFFFC8;text-align:right;}
+div#overall span.progress span.amount {padding-right:10px;color:#50bb55;font-weight:bold;}
 
 div#overall span#status {text-align:center;display:block;width:100%;font-weight:bold;color:#aaa;position:absolute;}
 
-div#overall span.progress {display:none;}
+div#overall, div#overall span.progress {display:none;}

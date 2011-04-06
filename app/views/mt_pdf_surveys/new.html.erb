@@ -27,37 +27,40 @@
 <%= semantic_form_for @survey, :url => mt_url do |f| %>
 <input type="hidden" name="assignmentId" value="<%= @assignment_id %>" />
 <%= f.inputs do %>
-	<%= f.input :title, :input_html => {:disabled => @disabled} %>
+	<%= f.input :title, :input_html => {:disabled => @disabled}, :label => 'Product Title' %>
 	
 	<li>
-	<div id="wrapper">
-		<div id="overall"><span class="progress"><span class="amount">10%</span></span><span id="status"></span></div>
-
-		<%=raw s3_swf_upload_tag(
-			:signaturePath => new_s3_upload_path(:format => :xml),
-			:fileTypes => '*.jpg;*.gif;*.png;',
-		  :fileTypeDescs => 'Image files.',
-			:selectMultipleFiles => false,
-			:keyPrefix => "mt_pdf_survey/#{@upload_prefix}_",
-			:onFileNotInQueue => "alert('File not found in the queue');",
-			:onFileSizeLimitReached => "alert('That file is too big');",
-			:onQueueChange => "queueChangeHandler(queue);",
-			:onQueueSizeLimitReached => "alert('There are too many files in the queue');",
-			:onQueueEmpty => "alert('You gotta have at least one file in there');",
-			:onQueueClear => "queueClearHandler(queue);",
-			:onUploadingStart => "uploadingStartHandler();",
-			:onUploadingFinish => "uploadingFinishHandler();",
-			:onSignatureIOError => "alert('There was a file upload io error');",
-			:onSignatureXMLError => "alert('There was a file upload xml error');",
-			:onSignatureSecurityError => "alert('There was a security error');",
-			:onUploadError => "alert('There was an upload error');",
-			:onUploadIOError => "alert('There was an upload IO error');",
-			:onUploadSecurityError => "alert('There was an error');",
-			:onUploadProgress => "progressHandler(progress_event);",
-			:onUploadComplete => "uploadCompleteHandler(upload_options,event);",
-			:onFileAdd => 's3_swf_1_object.startUploading();'
-		) %>
-	</div>	
+		<label>Upload Product Screenshot</label>
+		<div class="image_preview"><span></span>
+			<%= image_tag 'update.png', :title => 'Please upload an image', :id => 'image_preview', :width => 24, :height => 24 %>
+		</div>
+		<div id="wrapper">
+			<div id="overall"><span class="progress"><span class="amount"></span></span><span id="status"></span></div>
+			<%=raw s3_swf_upload_tag(
+				:signaturePath => new_s3_upload_path(:format => :xml),
+				:fileTypes => '*.jpg;*.gif;*.png;',
+			  :fileTypeDescs => 'Image files.',
+				:selectMultipleFiles => false,
+				:keyPrefix => "mt_pdf_survey/#{@upload_prefix}_",
+				:onFileNotInQueue => "alert('File not found in the queue');",
+				:onFileSizeLimitReached => "alert('That file is too big');",
+				:onQueueChange => "queueChangeHandler(queue);",
+				:onQueueSizeLimitReached => "alert('There are too many files in the queue');",
+				:onQueueEmpty => "alert('You gotta have at least one file in there');",
+				:onQueueClear => "queueClearHandler(queue);",
+				:onUploadingStart => "uploadingStartHandler();",
+				:onUploadingFinish => "uploadingFinishHandler();",
+				:onSignatureIOError => "alert('There was a file upload io error');",
+				:onSignatureXMLError => "alert('There was a file upload xml error');",
+				:onSignatureSecurityError => "alert('There was a security error');",
+				:onUploadError => "alert('There was an upload error');",
+				:onUploadIOError => "alert('There was an upload IO error');",
+				:onUploadSecurityError => "alert('There was an error');",
+				:onUploadProgress => "progressHandler(progress_event);",
+				:onUploadComplete => "uploadCompleteHandler(upload_options,event);",
+				:onFileAdd => 'fileAddHandler();'
+			) %>
+		</div>	
 	</li>
 	
 	<%= f.input :material, :input_html => {:disabled => @disabled, :class => "wymeditor skinny"}  %>
@@ -157,6 +160,13 @@ var progressHandler = function(progress_event){
 	document.getElementById('overall').firstChild.firstChild.innerHTML = overall_percentage;
 };
 
+var fileAddHandler = function(){
+	document.getElementById('overall').firstChild.style.width = "0%";
+	document.getElementById('overall').firstChild.firstChild.innerHTML = "0%";
+	$('div#overall').show();
+	s3_swf_1_object.startUploading();
+}
+
 var uploadCompleteHandler = function(upload_options,event){
 	$.ajax({
      url: '<%= s3_uploads_path(:format => :js)%>',
@@ -164,17 +174,21 @@ var uploadCompleteHandler = function(upload_options,event){
      type: 'POST',
      data: ({
 			'authenticity_token' : '<%= form_authenticity_token %>',
-			'mt_upload' : {
+			's3_upload' : {
 				'file_file_name' : "<%= @upload_prefix %>_" + upload_options.FileName,
 				'file_file_size' : upload_options.FileSize,
 				'file_content_type' : upload_options.ContentType,
 				'assignment_id' : '<%= @assignment_id %>',
-				'mt_hit_id' : '<%= @mt_hit.try(:id) %>'
-		}
+				'mt_hit_id' : '<%= @mt_hit.try(:id) %>',
+				'survey_type' : '<%= @survey.class.name %>'
+		  }
 		}),
-		dataType: 'script'
-	}
-	)
+		dataType: 'json',
+		success: function(data, textStatus, jqXHR){
+			$('#image_preview').attr("src", data.url).attr("width","100").attr("height","100");
+    }
+  })
+	$('div#overall').hide();
 };
 
 var readableBytes = function(bytes) {
