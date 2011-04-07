@@ -1,28 +1,34 @@
 <% if @disabled %>
-<h2>HIT Preview</h2>
+<div class="preview_mode">
+<p>Previewing...</p>
 <p>Remember To "Accept HIT" to proceed.</p>
+</div>
 <% end %>
 
 <div class="mt-instructions">
 	<h3>Instructions</h3>
+	<div id="video_instructions" class="openable <%= @disabled ? 'open' : '' %>">
+		<p><%= link_to '', '#', :class => 'toggle_button', :title => 'Show/Hide Video Instructions' %>Video Instructions</p>
+		<iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/uV9UlcbwFWs" frameborder="0"></iframe>
+	</div>
 	<p>
-		Enter the text and images from 
-		<% unless @survey.subpage.only? %>
-		the <strong><%= @survey.subpage.name %> Product</strong> on
+		<%= link_to 'Open This PDF', "#{@survey.asset_path}?#{rails_asset_id(@survey.asset_path)}", :class => 'pdf' %>
+	</p>
+	<p>
+		<% if @survey.subpage.only? %>
+		Enter
+		<% else %>
+		From the <strong><%= @survey.subpage.name %> Product</strong> in the PDF, enter
 		<% end %>
-		<%= link_to 'This PDF', "#{@survey.asset_path}?#{rails_asset_id(@survey.asset_path)}" %>
+	 	the product text below and upload a cropped screenshot of the image.
+	</p>
+	<p>
+		For an example, watch the video above.
 	</p>
 
-	<% if @survey.subpage.only? %>
-	<p>
-		This PDF has describes a single product.  Please enter the text below and upload a screenshot of the image.
-	</p>
-	<% else %>
-	<p>
-		This PDF describes two products.  Please enter the text below and upload a screenshot of the image for the <strong><%= @survey.subpage.name %></strong> product on the page.
-	</p>
-	<% end %>
+	<h3>Enter Product Information Below</h3>
 </div>
+
 
 <%= semantic_form_for @survey, :url => mt_url do |f| %>
 <input type="hidden" name="assignmentId" value="<%= @assignment_id %>" />
@@ -77,6 +83,7 @@
 		<label>Second Table Data</label>
 		<%= render 'table_input', :f => f, :object => :mt_pdf_survey, :field => :table2, :columns => 5, :rows => 10 %>
 	</li>
+	<%= f.input :feedback, :label => image_tag('feedback.png') + ' Feedback (leave us any comments here)', :input_html => { :rows => 3 } %>
 <% end %>
 
 <% unless @survey.subpage.only? %>

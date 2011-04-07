@@ -387,6 +387,10 @@ form.formtastic fieldset.services2 {
 	line-height:1.5em;
 }
 
+form.formtastic fieldset > ol > li label {
+	width: auto;
+}
+
 /* buttons
 ---------------------------------------------*/
 
@@ -712,12 +716,16 @@ table.mtdata input {
 
 div.mt-instructions {
 	width: 680px;
+	margin: 10px 0 0 0;
 }
 div.mt-instructions h3 {
 	padding: 2px;
 	color: white;
 	background-color: #aaa;
 	margin: 0 0 10px 0;
+}
+div.mt-instructions p {
+	font-size: 16px;
 }
 
 .wym_skin_timpact {
@@ -768,3 +776,46 @@ div#overall span.progress span.amount {padding-right:10px;color:#50bb55;font-wei
 div#overall span#status {text-align:center;display:block;width:100%;font-weight:bold;color:#aaa;position:absolute;}
 
 div#overall, div#overall span.progress {display:none;}
+
+/* Toggle Button 
+--------------------------------------- */
+
+.toggle_button {
+  background: url(/images/table_show_hide_arrow.png) no-repeat left top;
+  display: block;
+  float: left;
+  height: 15px;
+  margin: 2px 5px 0 0;
+  text-indent: -9999px;
+  width: 15px;
+  }
+table.parent_child .toggle_button:focus {
+  outline: none;
+}
+.open .toggle_button, .toggle_button.open {
+  background-position: left -100px;
+  } 
+
+div#video_instructions iframe {
+	display: none;
+}
+div#video_instructions.open iframe {
+	display: block;
+	margin-bottom: 10px;
+}
+
+a.pdf {
+	background: url(/images/pdf_icon.png) no-repeat left;
+	padding-left: 20px;
+}
+
+div.preview_mode {
+	padding: 10px;
+	background-color: #DD6E00;
+	border-bottom: 2px solid #A15037;
+}
+.preview_mode p {
+	color: white;
+	font-size: 18px;	
+	text-align: center;
+}
