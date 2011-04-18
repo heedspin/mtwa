@@ -1,0 +1,11 @@
+<% s3_local = File.join(Rails.root, 'config/amazon_s3_local.yml') %>
+<% if File.exists?(s3_local) %>
+<%= File.open(s3_local).read %>
+<% else %>  
+production:
+  bucket: mtwa-uploads
+  access_key_id: <%= ENV['S3_KEY'] %>
+  secret_access_key: <%= ENV['S3_SECRET'] %>
+  max_file_size: 10485760
+  acl: public-read
+<% end %>

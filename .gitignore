@@ -8,6 +8,7 @@ tmp/restart.txt
 public/system
 config/email_password.txt
 s3_local.yml
+amazon_s3_local.yml
 app_config_local.yml
 config/s3cfg
 config/uploads-s3cfg

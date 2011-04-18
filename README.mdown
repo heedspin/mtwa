@@ -2,12 +2,13 @@
 
 Needs some environment variables:
 
+Amazon S3 for assets and uploads:
  - S3_KEY
  - S3_SECRET
+
  - email_password
 
 heroku config:add key=value
-
 
 ## S3
 
