@@ -11,7 +11,8 @@ class CreateMtHits < ActiveRecord::Migration
       t.integer  :hit_num_assignments
       t.integer  :hit_lifetime
       t.string   :form_url
-      t.boolean  :complete
+      t.references :status
+      t.string   :local_id
       t.text     :cookie_json
       t.timestamps
     end

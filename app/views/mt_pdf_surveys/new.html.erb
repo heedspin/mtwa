@@ -12,7 +12,7 @@
 		<iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/uV9UlcbwFWs" frameborder="0"></iframe>
 	</div>
 	<p>
-		<%= link_to 'Open This PDF', "#{@survey.asset_path}?#{rails_asset_id(@survey.asset_path)}", :class => 'pdf' %>
+		<%= link_to 'Open This PDF', "#{@survey.asset_path}?#{rails_asset_id(@survey.asset_path)}", :class => 'pdf', :target => '_blank' %>
 	</p>
 	<p>
 		<% if @survey.subpage.only? %>
@@ -40,6 +40,7 @@
 		<div class="image_preview"><span></span>
 			<%= image_tag 'update.png', :title => 'Please upload an image', :id => 'image_preview', :width => 24, :height => 24 %>
 		</div>
+		<% unless @disabled %>
 		<div id="wrapper">
 			<div id="overall"><span class="progress"><span class="amount"></span></span><span id="status"></span></div>
 			<%=raw s3_swf_upload_tag(
@@ -66,7 +67,8 @@
 				:onUploadComplete => "uploadCompleteHandler(upload_options,event);",
 				:onFileAdd => 'fileAddHandler();'
 			) %>
-		</div>	
+		</div>
+		<% end %>
 	</li>
 	
 	<%= f.input :material, :input_html => {:disabled => @disabled, :class => "wymeditor skinny"}  %>
@@ -92,7 +94,7 @@
 </p>
 <% end %>
 <%= f.buttons do %>
-  <%= f.commit_button 'Save', :button_html => {:disabled => @disabled} %>
+  <%= f.commit_button 'Submit HIT', :button_html => {:disabled => @disabled} %>
 <% end %>
 <% end %>
 

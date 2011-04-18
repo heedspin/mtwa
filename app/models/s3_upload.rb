@@ -1,5 +1,11 @@
 class S3Upload < ApplicationModel
 	belongs_to :survey, :polymorphic => true
+	belongs_to :mt_hit
+	scope :for_assignment, lambda { |assignment_id|
+	  {
+	    :conditions => { :assignment_id => assignment_id }
+	  }
+  }
 
   has_attached_file( :file,
                      :storage => :s3,

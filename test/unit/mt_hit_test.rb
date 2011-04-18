@@ -1,0 +1,24 @@
+require File.dirname(__FILE__) + '/../test_helper'
+
+class MtHitTest < ActiveSupport::TestCase
+  def test_parse_answers
+    answers = {"mt_pdf_survey[table1_6_0]"=>"", "mt_pdf_survey[table1_7_1]"=>"", "mt_pdf_survey[table1_1_1]"=>"t1 r1 c1", "commit"=>"Submit HIT", "mt_pdf_survey[table1_0_0]"=>"t1 r0 c0", "mt_pdf_survey[table1_8_2]"=>"", "mt_pdf_survey[table1_6_3]"=>"", "mt_pdf_survey[table1_7_4]"=>"", "mt_pdf_survey[table2_6_2]"=>"", "mt_pdf_survey[table2_5_1]"=>"", "mt_pdf_survey[table1_0_3]"=>"t1 r0 c3", "mt_pdf_survey[table1_1_4]"=>"", "mt_pdf_survey[table1_4_0]"=>"", "mt_pdf_survey[table1_2_1]"=>"", "mt_pdf_survey[table1_9_2]"=>"", "mt_pdf_survey[table1_3_2]"=>"", "mt_pdf_survey[table1_4_3]"=>"", "mt_pdf_survey[table1_2_4]"=>"", "mt_pdf_survey[title]"=>"Auxiliary Channel Splice Kit With Plates (Seismic)", "mt_pdf_survey[table1_5_0]"=>"", "mt_pdf_survey[table2_5_4]"=>"", "mt_pdf_survey[table2_8_0]"=>"", "mt_pdf_survey[table2_9_1]"=>"", "mt_pdf_survey[table2_7_2]"=>"", "mt_pdf_survey[table2_0_1]"=>"", "mt_pdf_survey[table2_2_0]"=>"", "mt_pdf_survey[table2_1_2]"=>"", "mt_pdf_survey[table2_8_3]"=>"", "mt_pdf_survey[table2_9_4]"=>"", "mt_pdf_survey[table1_5_3]"=>"", "mt_pdf_survey[table2_2_3]"=>"", "mt_pdf_survey[table2_0_4]"=>"", "mt_pdf_survey[table2_3_0]"=>"", "mt_pdf_survey[table2_4_1]"=>"", "mt_pdf_survey[table1_10_0]"=>"", "mt_pdf_survey[table2_10_1]"=>"", "mt_pdf_survey[notes]"=>"", "mt_pdf_survey[table2_10_4]"=>"", "mt_pdf_survey[feedback]"=>"tables are awesome", "mt_pdf_survey[table2_3_3]"=>"", "mt_pdf_survey[table1_10_3]"=>"", "mt_pdf_survey[table2_4_4]"=>"", "utf8"=>"✓", "mt_pdf_survey[table1_6_1]"=>"", "mt_pdf_survey[table1_8_0]"=>"", "mt_pdf_survey[table1_7_2]"=>"", "mt_pdf_survey[table2_6_0]"=>"", "mt_pdf_survey[table1_0_1]"=>"t1 r0 c1", "mt_pdf_survey[table1_1_2]"=>"t1 r1 c2", "mt_pdf_survey[table1_8_3]"=>"", "mt_pdf_survey[table1_6_4]"=>"", "mt_pdf_survey[table1_9_0]"=>"", "mt_pdf_survey[table2_5_2]"=>"", "mt_pdf_survey[table1_4_1]"=>"", "mt_pdf_survey[table1_0_4]"=>"", "mt_pdf_survey[table1_3_0]"=>"", "mt_pdf_survey[table1_2_2]"=>"", "mt_pdf_survey[table2_6_3]"=>"", "mt_pdf_survey[table2_7_0]"=>"", "mt_pdf_survey[table1_9_3]"=>"", "mt_pdf_survey[table2_1_0]"=>"t2 r1 c0", "mt_pdf_survey[table1_5_1]"=>"", "mt_pdf_survey[table2_8_1]"=>"", "mt_pdf_survey[table2_9_2]"=>"", "mt_pdf_survey[table2_7_3]"=>"", "mt_pdf_survey[table1_3_3]"=>"", "mt_pdf_survey[table1_4_4]"=>"", "mt_pdf_survey[table2_2_1]"=>"", "mt_pdf_survey[table2_0_2]"=>"", "mt_pdf_survey[table2_1_3]"=>"", "mt_pdf_survey[table1_5_4]"=>"", "mt_pdf_survey[table2_8_4]"=>"", "mt_pdf_survey[table2_10_2]"=>"", "mt_pdf_survey[material]"=>"", "mt_pdf_survey[table2_2_4]"=>"", "mt_pdf_survey[table2_3_1]"=>"", "mt_pdf_survey[table1_10_1]"=>"", "mt_pdf_survey[table2_4_2]"=>"", "mt_pdf_survey[table2_3_4]"=>"", "mt_pdf_survey[table1_10_4]"=>"", "mt_pdf_survey[table1_7_0]"=>"", "mt_pdf_survey[table1_1_0]"=>"t1 r1 c0", "mt_pdf_survey[table1_8_1]"=>"", "mt_pdf_survey[table1_6_2]"=>"", "mt_pdf_survey[table1_7_3]"=>"", "authenticity_token"=>"kwfcUwDD+7KDwC+cwnHjPJl4qmS5Od43i/X/CI82OlQ=", "mt_pdf_survey[table1_0_2]"=>"", "mt_pdf_survey[table1_1_3]"=>"", "mt_pdf_survey[table1_2_0]"=>"", "mt_pdf_survey[table2_5_0]"=>"", "mt_pdf_survey[table2_6_1]"=>"", "mt_pdf_survey[table1_9_1]"=>"", "mt_pdf_survey[table1_8_4]"=>"", "mt_pdf_survey[table2_5_3]"=>"", "mt_pdf_survey[table2_6_4]"=>"", "mt_pdf_survey[table2_9_0]"=>"", "mt_pdf_survey[table2_7_1]"=>"", "mt_pdf_survey[table1_3_1]"=>"", "mt_pdf_survey[table1_4_2]"=>"", "mt_pdf_survey[table1_2_3]"=>"", "mt_pdf_survey[table2_0_0]"=>"t2 r0 c0", "mt_pdf_survey[table2_1_1]"=>"", "mt_pdf_survey[table1_9_4]"=>"", "mt_pdf_survey[table2_7_4]"=>"", "mt_pdf_survey[table1_3_4]"=>"", "mt_pdf_survey[table1_5_2]"=>"", "mt_pdf_survey[table2_8_2]"=>"", "mt_pdf_survey[table2_9_3]"=>"", "mt_pdf_survey[finish]"=>"", "mt_pdf_survey[table2_2_2]"=>"", "mt_pdf_survey[table2_0_3]"=>"", "mt_pdf_survey[table2_1_4]"=>"", "mt_pdf_survey[table2_4_0]"=>"", "mt_pdf_survey[table2_10_0]"=>"", "mt_pdf_survey[table2_3_2]"=>"", "mt_pdf_survey[table1_10_2]"=>"", "mt_pdf_survey[table2_4_3]"=>"", "mt_pdf_survey[table2_10_3]"=>"", "mt_pdf_survey[table2_title]"=>"table2", "mt_pdf_survey[table1_title]"=>"table1 title"}
+    assert params = MtHit.parse_mturk_answers(answers)
+    assert survey = params['mt_pdf_survey']
+    assert table1 = survey['table1']
+    assert row0 = table1[0]
+    assert_equal 't1 r0 c0', row0[0], row0.inspect
+    assert_equal 't1 r0 c1', row0[1], row0.inspect
+    assert_nil row0[2], row0.inspect
+    assert_equal 't1 r0 c3', row0[3], row0.inspect
+    assert row1 = table1[1]
+    assert_equal 't1 r1 c0', row1[0], row1.inspect
+    
+    assert table2 = survey['table2']
+    assert row0 = table2[0]
+    assert_equal 't2 r0 c0', row0[0], row0.inspect
+    assert row1 = table2[1]
+    assert_equal 't2 r1 c0', row1[0], row1.inspect
+  end
+end
+

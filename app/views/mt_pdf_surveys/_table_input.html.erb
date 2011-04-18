@@ -1,15 +1,15 @@
 <table class="mtdata">
   <thead>
     <tr>
-			<% (1..columns).each do |column| %>
-			<th><%= table_input(object, field, 'header', column, 14) %></th>
+			<% (0..columns-1).each do |column| %>
+			<th><%= table_input(object, field, 0, column, 14) %></th>
 			<% end %>
 		</tr>
 	</thead>
   <tbody>
 		<% (1..rows).each do |row| %>
     <tr class="<%= cycle('even', 'odd') %>">
-			<% (1..columns).each do |column| %>
+			<% (0..columns-1).each do |column| %>
 			<td><%= table_input(object, field, row, column) %></td>
 		<% end %>
 		</tr>

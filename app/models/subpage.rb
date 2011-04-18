@@ -7,4 +7,8 @@ class Subpage < ActiveHash::Base
     {:id => 3, :name => 'Second ', :method => :second_subpage}
   ]
   enum_accessor :name
+  
+  def to_s
+    self.name
+  end
 end

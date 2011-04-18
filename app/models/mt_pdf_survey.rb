@@ -5,6 +5,7 @@ class MtPdfSurvey < ApplicationModel
   belongs_to :mt_hit
   belongs_to :mt_answer_status
   belongs_to :subpage
+  has_many :s3_uploads, :as => :survey
   
   def asset_path
     "/assets/#{self.survey_type.key}/#{self.page}.pdf"
@@ -25,11 +26,11 @@ class MtPdfSurvey < ApplicationModel
   attr_accessor :table2
   
   def table1
-    (self.table1_data.present? && JSON.parse(self.table1_data).map { |r| r.keys.sort.map { |k| r[k] } })
+    @table1 ||= self.table1_data.present? && JSON.parse(self.table1_data)
   end
   
   def table2
-    (self.table2_data.present? && JSON.parse(self.table2_data).map { |r| r.keys.sort.map { |k| r[k] } })
+    @table2 ||= self.table2_data.present? && JSON.parse(self.table2_data)
   end
   
   protected
@@ -38,6 +39,14 @@ class MtPdfSurvey < ApplicationModel
     def encode_table_data
       self.table1_data = @table1 && @table1.to_json
       self.table2_data = @table2 && @table2.to_json
+      true
+    end
+    
+    before_save :find_uploads
+    def find_uploads
+      if self.mt_hit and self.assignment_id.present?
+        self.s3_uploads = self.mt_hit.s3_uploads.for_assignment(self.assignment_id).all
+      end
       true
     end
 end

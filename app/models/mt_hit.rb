@@ -1,8 +1,13 @@
 class MtHit < ApplicationModel
   include Rails.application.routes.url_helpers
   validates_presence_of :task_type, :hit_url, :hit_title, :hit_description, :hit_id, :hit_reward, :hit_num_assignments, :hit_lifetime, :form_url
+  belongs_to :status, :class_name => 'MtHitStatus'
+  has_many :s3_uploads
 
-  scope :in_progress, :conditions => 'mt_hits.complete = false or mt_hits.complete is null'
+  scope :complete, :conditions => { :status_id => MtHitStatus.complete.id }
+  scope :in_progress, :conditions => { :status_id => MtHitStatus.in_progress.id }
+  scope :not_deleted, :conditions => { :status_id => [MtHitStatus.in_progress.id, MtHitStatus.complete.id] }
+  scope :by_date, :order => :created_at
 
   default_value_for :sandbox do
     RTurk.sandbox?
@@ -16,14 +21,26 @@ class MtHit < ApplicationModel
   default_value_for :hit_lifetime do
     1.days.seconds.to_i
   end
+  default_value_for :status_id do
+    MtHitStatus.in_progress.id
+  end
   
   attr_accessor :cookie
   before_save :encode_cookie
   def encode_cookie
     self.cookie_json = self.cookie.to_json if self.cookie.present?
+    true
   end
   def cookie
     @cookie ||= self.cookie_json && JSON.parse(self.cookie_json)
+  end
+
+  before_save :stringify_local_id
+  def stringify_local_id
+    if self.local_id.is_a?(Hash)
+      self.local_id = self.class.hash_to_string(self.local_id)
+    end
+    true
   end
 
   def rturk_hit
@@ -37,8 +54,16 @@ class MtHit < ApplicationModel
         logger.info "Assignment status : #{assignment.status}"
         assignment.approve!('__clear_all_turks__approved__') if assignment.status == 'Submitted'
       end
-      self.update_attributes(:complete => true)
+      self.update_attributes(:status => MtHitStatus.complete)
     end
+  end
+  
+  def archive!
+    self.update_attributes(:status => MtHitStatus.archived)
+  end
+  
+  def destroy
+    self.update_attributes(:status => MtHitStatus.deleted)
   end
 
   def task_class
@@ -56,32 +81,51 @@ class MtHit < ApplicationModel
   def answers
     if @answers.nil?
       @answers = task_class.for_hit(self)
-      if self.in_progress? and (amnts = self.assignments)
-        amnts.each do |assignment|
-          if assignment.status == 'Submitted'
+      if self.status.in_progress? and (asmts = self.assignments)
+        asmts.each do |assignment|
+          if ['Submitted', 'Approved'].include?(assignment.status)
             unless answer = @answers.detect { |a| a.assignment_id == assignment.id }
-              params = assignment.answers.map { |k, v| "#{CGI::escape(k)}=#{CGI::escape(v)}" }.join('&')
-              param_hash = Rack::Utils.parse_nested_query(params)
-              @answers.push answer = task_class.create(param_hash[self.task_object_name])
+              params = MtHit.parse_mturk_answers(assignment.answers)
+              @answers.push answer = task_class.create(params[self.task_object_name])
               answer.assignment_id = assignment.id
               answer.mt_hit = self
+              answer.save
             end
             # answer.mt_answer_status = MtAnswerStatus.find_by_name(assignment.status)
-            answer.save
           end
         end
       end
     end
     @answers
   end
-
-  def in_progress?
-    !self.complete?
+  
+  def self.parse_mturk_answers(answers)
+    params = Hash.new({})
+    answers.each do |key, value|
+      next unless value.present?
+      if key =~ /^([^\[]+)\[(.+)\]$/
+        # text_field_tag "#{object}[#{field}_#{row}_#{column}]", nil, :size => size
+        object = $1
+        field = $2
+        if key.include?('table') and field =~ /(.+)_(.+)_(.+)/
+          field = $1
+          row = $2
+          column = $3
+          table = params[object][field] ||= []
+          row = table[row.to_i] ||= []
+          row[column.to_i] = value
+        else
+          params[object][field] = value
+        end
+      end
+    end
+    params
   end
-
+  
   HIT_FRAMEHEIGHT = 1000
 
   def self.make(args)
+    args[:local_id] ||= args[:cookie]
     mt_hit = MtHit.new(args)
     host = RTurk.sandbox? ? AppConfig.local_hostname : AppConfig.production_hostname
     mt_hit.form_url = mt_hit.send("new_#{mt_hit.task_object_name}_url",
@@ -104,7 +148,25 @@ class MtHit < ApplicationModel
   def self.preview_assignment?(assignment_id)
     assignment_id.nil? || (assignment_id == 'ASSIGNMENT_ID_NOT_AVAILABLE')
   end
+  
+  def self.find_by_local_id(local_id)
+    if local_id.is_a?(Hash)
+      local_id = hash_to_string(local_id)
+    end
+    self.not_deleted.first :conditions => { :local_id => local_id }
+  end
+  
+  def self.hash_to_string(hash)
+    hash.keys.map { |k| "#{k}:#{hash[k]}" }.sort.join(',')
+  end
+  
+  def to_s
+    "MtHit #{id} (#{task_type})"
+  end
 end
+
+
+
 # == Schema Information
 #
 # Table name: mt_hits
@@ -120,7 +182,8 @@ end
 #  hit_num_assignments :integer(4)
 #  hit_lifetime        :integer(4)
 #  form_url            :string(255)
-#  complete            :boolean(1)
+#  status_id           :integer(4)
+#  local_id            :string(255)
 #  cookie_json         :text
 #  created_at          :datetime
 #  updated_at          :datetime
